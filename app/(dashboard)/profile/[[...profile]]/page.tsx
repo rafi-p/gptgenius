@@ -1,9 +1,10 @@
+import { UserProfile } from "@clerk/nextjs";
 import React from "react";
 
 interface ProfilePageProps {}
 
 const ProfilePage = ({}: ProfilePageProps) => {
-  return <div>ProfilePage</div>;
+  return <UserProfile path="/profile" />;
 };
 
 export default ProfilePage;
