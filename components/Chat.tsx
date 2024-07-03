@@ -1,17 +1,40 @@
 "use client";
 
+import { generateChatResponse } from "@/utils/actions";
+import { useMutation } from "@tanstack/react-query";
+import { ChatCompletionMessageParam } from "openai/resources/index.mjs";
 import React, { FormEvent, useState } from "react";
+import toast from "react-hot-toast";
 
 interface ChatProps {}
 
 const Chat = ({}: ChatProps) => {
   const [text, setText] = useState("");
-  const [message, setMessage] = useState([]);
+  const [messages, setMessages] = useState<ChatCompletionMessageParam[]>([]);
+
+  const { mutate } = useMutation({
+    mutationFn: (query: ChatCompletionMessageParam) =>
+      generateChatResponse([...messages, query]),
+    onSuccess: (data) => {
+      if (!data) {
+        toast.error("Something went wrong...");
+        return;
+      }
+      setMessages((prev) => [...prev, data]);
+    },
+  });
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(text);
+    const query = {
+      role: "user",
+      content: text,
+    } as ChatCompletionMessageParam;
+    mutate(query);
+    setMessages((prev) => [...prev, query]);
+    setText("");
   };
+
   return (
     <div className="min-h-[calc(100vh-6rem)] grid grid-rows-[1fr,auto]">
       <div>
