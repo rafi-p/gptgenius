@@ -1,8 +1,11 @@
+import { Tour } from "@/utils/actions";
 import React from "react";
 
-interface TourInfoProps {}
+interface TourInfoProps {
+  tour: Tour;
+}
 
-const TourInfo = ({}: TourInfoProps) => {
+const TourInfo = ({ tour }: TourInfoProps) => {
   return <div>TourInfo</div>;
 };
 
