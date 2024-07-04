@@ -22,7 +22,7 @@ export const generateChatResponse = async (
     return response.choices[0].message;
   } catch (error) {
     console.log(error);
-
+    // throw error;
     return null;
   }
 };

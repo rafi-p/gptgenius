@@ -16,12 +16,16 @@ const Chat = ({}: ChatProps) => {
     mutationFn: (query: ChatCompletionMessageParam) =>
       generateChatResponse([...messages, query]),
     onSuccess: (data) => {
+      console.log(data);
       if (!data) {
         toast.error("Something went wrong...");
         return;
       }
       setMessages((prev) => [...prev, data]);
     },
+    // onError(error) {
+    //   toast.error(error.message);
+    // },
   });
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
